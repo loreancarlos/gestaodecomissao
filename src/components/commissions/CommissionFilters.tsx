@@ -40,7 +40,7 @@ export function CommissionFilters({
   ];
 
   const developmentOptions = [
-    { id: "", label: "Todos os empreendimentos" },
+    { id: "", label: "" },
     ...developments.map((dev) => ({ id: dev.id, label: dev.name })),
   ];
 
@@ -65,7 +65,7 @@ export function CommissionFilters({
           options={developmentOptions}
           value={selectedDevelopment}
           onChange={onDevelopmentChange}
-          placeholder=""
+          placeholder="Todos os empreendimentos"
           label="Empreendimento"
           allowClear
         />
