@@ -65,7 +65,7 @@ export function CommissionFilters({
           options={developmentOptions}
           value={selectedDevelopment}
           onChange={onDevelopmentChange}
-          placeholder="Todos os empreendimentos"
+          placeholder=""
           label="Empreendimento"
           allowClear
         />
