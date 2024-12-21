@@ -12,7 +12,7 @@ export function Layout() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login', { replace: true });
+    navigate('/', { replace: true });
   };
 
   const handleChangePassword = async (currentPassword: string, newPassword: string) => {
