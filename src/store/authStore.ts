@@ -27,8 +27,9 @@ export const useAuthStore = create<AuthState>()(
           const { user, token } = await AuthService.login(email, password);
           set({ user, token, isAuthenticated: true });
         } catch (error) {
-          const authError = error as AuthError;
-          throw new Error(authError.message);
+          //const authError = error as AuthError;
+          //throw new Error(authError.message);
+          throw error;
         }
       },
       logout: () => {
