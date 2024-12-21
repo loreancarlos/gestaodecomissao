@@ -24,7 +24,7 @@ export function Login() {
 
     try {
       await login(email, password);
-      const from = location.state?.from?.pathname || "/";
+      const from = location.state?.from?.pathname || "/clients";
       navigate(from, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Credenciais inválidas");
