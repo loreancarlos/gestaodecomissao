@@ -17,14 +17,11 @@ export class AuthService {
       return await api.login(email, password);
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message.includes("401")) {
-          throw new Error("Email ou senha inválidos");
-        }
         if (error.message.includes("fetch")) {
           throw new Error("Erro de conexão com o servidor");
         }
       }
-      throw new Error("Erro ao realizar login");
+      throw new Error("Email ou senha inválidos");
     }
   }
 
