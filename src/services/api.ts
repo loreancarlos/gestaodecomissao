@@ -37,7 +37,6 @@ class ApiClient {
     if (!response.ok) {
       if (response.status === 401) {
         this.clearToken();
-        window.location.href = "/login";
         throw new Error("Session expired");
       }
       const error = await response.json();
