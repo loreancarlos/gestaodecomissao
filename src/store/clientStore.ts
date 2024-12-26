@@ -22,6 +22,10 @@ export const useClientStore = create<ClientState>((set, get) => ({
       const clients = await api.getClients();
       set({ clients, loading: false });
     } catch (error) {
+      if (error.message == "Session expired") {
+        const elem = document.getElementById("logout");
+        elem?.click();
+      }
       set({ error: "Failed to fetch clients", loading: false });
     }
   },
