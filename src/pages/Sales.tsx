@@ -93,6 +93,17 @@ export function Sales() {
     selectedStatus,
   ]);
 
+  const summaryData = useMemo(() => {
+    return filteredSales.reduce(
+      (acc, sale) => ({
+        totalSales: acc.totalSales + (Number(sale.totalValue) || 0),
+        totalCommissions: acc.totalCommissions + (Number(sale.commissionValue) || 0),
+        numberOfSales: acc.numberOfSales + 1,
+      }),
+      { totalSales: 0, totalCommissions: 0, numberOfSales: 0 }
+    );
+  }, [filteredSales]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -215,6 +226,19 @@ export function Sales() {
         columns={getSaleColumns(clients, developments, users)}
         renderActions={renderActions}
         onRowClick={handleRowClick}
+      />
+
+      <Table
+        data={filteredSales}
+        columns={getSaleColumns(clients, developments, users)}
+        renderActions={renderActions}
+        onRowClick={handleRowClick}
+      />
+
+      <SaleSummary
+        totalSales={summaryData.totalSales}
+        totalCommissions={summaryData.totalCommissions}
+        numberOfSales={summaryData.numberOfSales}
       />
 
       <Modal
