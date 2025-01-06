@@ -43,12 +43,12 @@ export function SaleFilters({
   );
 
   const developmentOptions = [
-    { id: "", label: "Todos os empreendimentos" },
+    { id: "", label: "" },
     ...developments.map((dev) => ({ id: dev.id, label: dev.name })),
   ];
 
   const brokerOptions = [
-    { id: "", label: "Todos os corretores" },
+    { id: "", label: "" },
     ...activeBrokers.map((broker) => ({ id: broker.id, label: broker.name })),
   ];
 
