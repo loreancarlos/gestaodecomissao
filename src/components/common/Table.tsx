@@ -31,80 +31,82 @@ export function Table<T extends { id: string }>({
   }, [data]);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={String(column.accessor)}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                {column.header}
-              </th>
-            ))}
-            {(onEdit || onDelete || renderActions) && (
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-24">
-                Ações
-              </th>
-            )}
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {tableData.map((item) => (
-            <tr
-              key={item.id}
-              onClick={() => onRowClick?.(item)}
-              className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
-            >
+    <div className="overflow-x-auto -mx-4 sm:mx-0">
+      <div className="inline-block min-w-full align-middle">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
               {columns.map((column) => (
-                <td
+                <th
                   key={String(column.accessor)}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
                 >
-                  {column.render
-                    ? column.render(item[column.accessor])
-                    : String(item[column.accessor])}
-                </td>
+                  {column.header}
+                </th>
               ))}
               {(onEdit || onDelete || renderActions) && (
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex items-center justify-end space-x-3">
-                    {renderActions ? (
-                      renderActions(item)
-                    ) : (
-                      <>
-                        {onEdit && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onEdit(item);
-                            }}
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </button>
-                        )}
-                        {onDelete && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onDelete(item);
-                            }}
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </td>
+                <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
+                  Ações
+                </th>
               )}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {tableData.map((item) => (
+              <tr
+                key={item.id}
+                onClick={() => onRowClick?.(item)}
+                className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+              >
+                {columns.map((column) => (
+                  <td
+                    key={String(column.accessor)}
+                    className="px-3 py-4 text-sm text-gray-500 max-w-[200px] truncate"
+                  >
+                    {column.render
+                      ? column.render(item[column.accessor])
+                      : String(item[column.accessor])}
+                  </td>
+                ))}
+                {(onEdit || onDelete || renderActions) && (
+                  <td className="px-3 py-4 text-sm font-medium">
+                    <div className="flex items-center justify-end space-x-2">
+                      {renderActions ? (
+                        renderActions(item)
+                      ) : (
+                        <>
+                          {onEdit && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(item);
+                              }}
+                              className="text-indigo-600 hover:text-indigo-900 p-1"
+                            >
+                              <Edit2 className="h-4 w-4" />
+                            </button>
+                          )}
+                          {onDelete && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(item);
+                              }}
+                              className="text-red-600 hover:text-red-900 p-1"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
