@@ -14,6 +14,8 @@ import { SaleForm } from "../components/sales/SaleForm";
 import { SaleDetailsModal } from "../components/sales/SaleDetailsModal";
 import { getSaleColumns } from "../components/sales/SaleColumns";
 import { Sale } from "../types";
+import { SaleSummary } from "../components/sales/SaleSummary";
+
 
 const initialFormData = {
   clientId: "",
