@@ -230,13 +230,6 @@ export function Sales() {
         onRowClick={handleRowClick}
       />
 
-      <Table
-        data={filteredSales}
-        columns={getSaleColumns(clients, developments, users)}
-        renderActions={renderActions}
-        onRowClick={handleRowClick}
-      />
-
       <SaleSummary
         totalSales={summaryData.totalSales}
         totalCommissions={summaryData.totalCommissions}
