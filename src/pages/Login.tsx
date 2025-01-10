@@ -44,7 +44,7 @@ export function Login() {
           <div className="flex justify-center">
             <img src={icone_1} width="160" height="100" />
           </div>
-          <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900">
             Gestão de Comissões
           </h2>
         </div>
