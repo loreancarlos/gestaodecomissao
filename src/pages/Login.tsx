@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Building2 } from "lucide-react";
+import icone_1 from "../assets/icone_1.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
@@ -42,9 +42,9 @@ export function Login() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center">
-            <Building2 className="h-12 w-12 text-indigo-600" />
+            <img src={icone_1} width="160" height="100" />
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
             Gestão de Comissões
           </h2>
         </div>
