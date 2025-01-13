@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { Building2, Users, FileText, LogOut, UserCog, DollarSign, Key, Menu, X } from 'lucide-react';
+import { Users, FileText, LogOut, UserCog, DollarSign, Key, Menu, X } from 'lucide-react';
 import { ChangePasswordModal } from './users/ChangePasswordModal';
 
 export function Layout() {
@@ -45,7 +45,6 @@ export function Layout() {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <div className="flex items-center">
-              <Building2 className="h-5 w-5 mr-2" />
               Empreendimentos
             </div>
           </Link>
@@ -109,7 +108,6 @@ export function Layout() {
             to="/developments"
             className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive('/developments')}`}
           >
-            <Building2 className="h-4 w-4 mr-1" />
             Empreendimentos
           </Link>
           <Link
@@ -149,7 +147,6 @@ export function Layout() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <Building2 className="h-8 w-8 text-indigo-600" />
                 <span className="ml-2 text-xl font-bold text-gray-900 hidden sm:block">
                   Gestão de Comissões
                 </span>
