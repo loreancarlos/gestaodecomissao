@@ -29,7 +29,7 @@ export function SaleFilters({
   brokers,
 }: SaleFiltersProps) {
   const statusOptions = [
-    { id: "", label: "Todos os status" },
+    { id: "", label: "" },
     { id: "paid", label: "Pago" },
     { id: "canceled", label: "Cancelado" },
     { id: "waiting_contract", label: "Aguardando a Assinatura do Contrato" },
