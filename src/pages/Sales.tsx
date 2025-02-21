@@ -63,7 +63,7 @@ export function Sales() {
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
   const [editingSale, setEditingSale] = useState<Sale | null>(null);
   const [formData, setFormData] = useState(initialFormData);
-  const [selectedYear, setSelectedYear] = useState(getCurrentYear().toString());
+  const [selectedYear, setSelectedYear] = useState("");
 
   useEffect(() => {
     fetchSales();
@@ -83,8 +83,13 @@ export function Sales() {
   const filteredSales = useMemo(() => {
     return sales.filter((sale) => {
       const client = clients.find((c) => c.id === sale.clientId);
+      const secondClient = clients.find((c) => c.id === sale.secondBuyerId);
+
       const matchesSearch =
         client?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        client?.cpf.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        secondClient?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        secondClient?.cpf.toLowerCase().includes(searchTerm.toLowerCase()) ||
         sale.blockNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
         sale.lotNumber.toLowerCase().includes(searchTerm.toLowerCase());
 
