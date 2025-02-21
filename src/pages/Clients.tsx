@@ -17,6 +17,7 @@ import {
 } from "../utils/masks";
 import { getDeleteUserErrorMessage } from "../utils/userValidations";
 import { Client } from "../types";
+import { removeAcento } from "../utils/format";
 
 export function Clients() {
   const {
@@ -47,7 +48,7 @@ export function Clients() {
   }, [fetchClients]);
 
   const columns = [
-    { header: "Nome", accessor: "name" as const},
+    { header: "Nome", accessor: "name" as const },
     { header: "Email", accessor: "email" as const },
     {
       header: "CPF",
@@ -62,10 +63,10 @@ export function Clients() {
   ];
 
   const filteredClients = useMemo(() => {
-    const searchTermLower = searchTerm.toLowerCase();
+    const searchTermLower = removeAcento(searchTerm.toLowerCase());
     return clients.filter(
       (client) =>
-        client.name.toLowerCase().includes(searchTermLower) ||
+        removeAcento(client.name.toLowerCase()).includes(searchTermLower) ||
         client.email.toLowerCase().includes(searchTermLower) ||
         client.cpf.includes(searchTerm) ||
         client.phone.includes(searchTerm)

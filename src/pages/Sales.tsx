@@ -17,6 +17,7 @@ import { getSaleColumns } from "../components/sales/SaleColumns";
 import { Sale } from "../types";
 import { SaleSummary } from "../components/sales/SaleSummary";
 import { getCurrentYear, getYearFromDate } from "../utils/yearFilter";
+import { removeAcento } from "../utils/format";
 
 const initialFormData = {
   clientId: "",
@@ -81,17 +82,20 @@ export function Sales() {
   }, [user]);
 
   const filteredSales = useMemo(() => {
+    const searchTermLower = removeAcento(searchTerm.toLowerCase());
     return sales.filter((sale) => {
       const client = clients.find((c) => c.id === sale.clientId);
       const secondClient = clients.find((c) => c.id === sale.secondBuyerId);
 
       const matchesSearch =
-        client?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        client?.cpf.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        secondClient?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        secondClient?.cpf.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sale.blockNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sale.lotNumber.toLowerCase().includes(searchTerm.toLowerCase());
+        removeAcento(client?.name.toLowerCase()).includes(searchTermLower) ||
+        client?.cpf.toLowerCase().includes(searchTermLower) ||
+        removeAcento(secondClient?.name.toLowerCase()).includes(
+          searchTermLower
+        ) ||
+        secondClient?.cpf.toLowerCase().includes(searchTermLower) ||
+        sale.blockNumber.toLowerCase().includes(searchTermLower) ||
+        sale.lotNumber.toLowerCase().includes(searchTermLower);
 
       const matchesDevelopment =
         !selectedDevelopment || sale.developmentId === selectedDevelopment;

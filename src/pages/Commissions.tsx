@@ -10,6 +10,7 @@ import { CommissionFilters } from "../components/commissions/CommissionFilters";
 import { CommissionSummary } from "../components/commissions/CommissionSummary";
 import { getCommissionColumns } from "../components/commissions/CommissionColumns";
 import { getCurrentYear, getYearFromDate } from "../utils/yearFilter";
+import { removeAcento } from "../utils/format";
 
 export function Commissions() {
   const { user } = useAuthStore();
@@ -46,38 +47,40 @@ export function Commissions() {
   }, [user]);
 
   const myCommissions = useMemo(() => {
-  if (!user || !sales.length || !clients.length || !developments.length)
-    return [];
+    if (!user || !sales.length || !clients.length || !developments.length)
+      return [];
 
-  return sales
-    .filter((sale) => sale.brokerId === user.id)
-    .map((sale) => {
-      const client = clients.find((c) => c.id === sale.clientId);
-      const development = developments.find(
-        (d) => d.id === sale.developmentId
-      );
+    return sales
+      .filter((sale) => sale.brokerId === user.id)
+      .map((sale) => {
+        const client = clients.find((c) => c.id === sale.clientId);
+        const development = developments.find(
+          (d) => d.id === sale.developmentId
+        );
 
-      return {
-        id: sale.id,
-        clientName: client?.name || "Cliente não encontrado",
-        developmentName: development?.name || "Empreendimento não encontrado",
-        developmentId: sale.developmentId,
-        blockNumber: sale.blockNumber,
-        lotNumber: sale.lotNumber,
-        totalValue: Number(sale.totalValue) || 0,
-        commissionValue: Number(sale.commissionValue) || 0,
-        status: sale.status,
-        purchaseDate: sale.purchaseDate,
-        updatedAt: sale.updatedAt,
-      };
-    });
-}, [sales, clients, developments, user]);
+        return {
+          id: sale.id,
+          clientName: client?.name || "Cliente não encontrado",
+          developmentName: development?.name || "Empreendimento não encontrado",
+          developmentId: sale.developmentId,
+          blockNumber: sale.blockNumber,
+          lotNumber: sale.lotNumber,
+          totalValue: Number(sale.totalValue) || 0,
+          commissionValue: Number(sale.commissionValue) || 0,
+          status: sale.status,
+          purchaseDate: sale.purchaseDate,
+          updatedAt: sale.updatedAt,
+        };
+      });
+  }, [sales, clients, developments, user]);
 
   const filteredCommissions = useMemo(() => {
+    const searchLower = removeAcento(searchTerm.toLowerCase());
     return myCommissions.filter((commission) => {
-      const searchLower = searchTerm.toLowerCase();
       const matchesSearch =
-        commission.clientName.toLowerCase().includes(searchLower) ||
+        removeAcento(commission.clientName.toLowerCase()).includes(
+          searchLower
+        ) ||
         commission.blockNumber.toLowerCase().includes(searchLower) ||
         commission.lotNumber.toLowerCase().includes(searchLower);
       const matchesDevelopment =

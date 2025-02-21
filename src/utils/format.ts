@@ -118,3 +118,13 @@ export function formatDisplayName(name: string | undefined | null): string {
   const words = name.trim().split(" ");
   return words.slice(0, 2).join(" ");
 }
+
+export function removeAcento(text: string | undefined | null): string {
+  text = text?.toLowerCase();
+  text = text?.replace(new RegExp("[ÁÀÂÃ]", "gi"), "a");
+  text = text?.replace(new RegExp("[ÉÈÊ]", "gi"), "e");
+  text = text?.replace(new RegExp("[ÍÌÎ]", "gi"), "i");
+  text = text?.replace(new RegExp("[ÓÒÔÕ]", "gi"), "o");
+  text = text?.replace(new RegExp("[ÚÙÛ]", "gi"), "u");
+  return text || "";
+}
