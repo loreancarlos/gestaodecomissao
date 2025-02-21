@@ -73,7 +73,7 @@ export function SaleFilters({
       <SearchInput
         value={searchTerm}
         onChange={onSearchChange}
-        placeholder="Pesquisar por cliente, quadra ou lote..."
+        placeholder="Pesquisar por cliente, cônjuge/sócio, cpf, quadra ou lote..."
       />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Combobox
