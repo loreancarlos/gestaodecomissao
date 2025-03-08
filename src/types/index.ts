@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: "admin" | "user" | "broker";
+  role: "admin" | "user" | "broker" | "teamLeader";
   active: boolean;
   createdAt: string;
   lastLogin?: string;
@@ -25,6 +25,7 @@ export interface Development {
 }
 
 export interface Sale {
+  updatedAt: string;
   id: string;
   clientId: string;
   secondBuyerId: string | null;

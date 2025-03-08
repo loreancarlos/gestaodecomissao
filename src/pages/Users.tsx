@@ -1,26 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, UserCheck, UserX, Clock, Edit2, Trash2, Key } from 'lucide-react';
-import { useUserStore } from '../store/userStore';
-import { Table } from '../components/common/Table';
-import { Modal } from '../components/common/Modal';
-import { ConfirmDialog } from '../components/common/ConfirmDialog';
-import { UserForm } from '../components/users/UserForm';
-import { AdminResetPasswordModal } from '../components/users/AdminResetPasswordModal';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
-import { ErrorMessage } from '../components/common/ErrorMessage';
-import { User } from '../types';
- 
+import React, { useState, useEffect } from "react";
+import {
+  Plus,
+  UserCheck,
+  UserX,
+  Clock,
+  Edit2,
+  Trash2,
+  Key,
+} from "lucide-react";
+import { useUserStore } from "../store/userStore";
+import { Table } from "../components/common/Table";
+import { Modal } from "../components/common/Modal";
+import { ConfirmDialog } from "../components/common/ConfirmDialog";
+import { UserForm } from "../components/users/UserForm";
+import { AdminResetPasswordModal } from "../components/users/AdminResetPasswordModal";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import { ErrorMessage } from "../components/common/ErrorMessage";
+import { User } from "../types";
+
 export function Users() {
-  const { users, loading, error, fetchUsers, addUser, updateUser, deleteUser, toggleUserStatus, adminResetPassword } = useUserStore();
+  const {
+    users,
+    loading,
+    error,
+    fetchUsers,
+    addUser,
+    updateUser,
+    deleteUser,
+    toggleUserStatus,
+    adminResetPassword,
+  } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [selectedUserForPasswordReset, setSelectedUserForPasswordReset] = useState<User | null>(null);
+  const [selectedUserForPasswordReset, setSelectedUserForPasswordReset] =
+    useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [formData, setFormData] = useState<Partial<User>>({
-    name: '',
-    email: '',
-    role: 'user',
+    name: "",
+    email: "",
+    role: "user",
     active: true,
   });
   const [operationError, setOperationError] = useState<string | null>(null);
@@ -35,11 +54,13 @@ export function Users() {
       if (editingUser) {
         await updateUser(editingUser.id, formData);
       } else {
-        await addUser(formData as Omit<User, 'id' | 'createdAt'>);
+        await addUser(formData as Omit<User, "id" | "createdAt">);
       }
       handleCloseModal();
     } catch (error) {
-      setOperationError(error instanceof Error ? error.message : 'Erro ao salvar usuário');
+      setOperationError(
+        error instanceof Error ? error.message : "Erro ao salvar usuário"
+      );
     }
   };
 
@@ -47,10 +68,10 @@ export function Users() {
     setIsModalOpen(false);
     setEditingUser(null);
     setFormData({
-      name: '',
-      email: '',
-      role: 'user',
-      active: true, 
+      name: "",
+      email: "",
+      role: "user",
+      active: true,
     });
     setOperationError(null);
   };
@@ -70,7 +91,9 @@ export function Users() {
     try {
       await toggleUserStatus(id);
     } catch (error) {
-      setOperationError(error instanceof Error ? error.message : 'Erro ao alterar status');
+      setOperationError(
+        error instanceof Error ? error.message : "Erro ao alterar status"
+      );
     }
   };
 
@@ -78,7 +101,9 @@ export function Users() {
     try {
       await adminResetPassword(userId, newPassword);
     } catch (error) {
-      setOperationError(error instanceof Error ? error.message : 'Erro ao redefinir senha');
+      setOperationError(
+        error instanceof Error ? error.message : "Erro ao redefinir senha"
+      );
     }
   };
 
@@ -89,55 +114,60 @@ export function Users() {
         setUserToDelete(null);
         setIsConfirmOpen(false);
       } catch (error) {
-        setOperationError(error instanceof Error ? error.message : 'Erro ao excluir usuário');
+        setOperationError(
+          error instanceof Error ? error.message : "Erro ao excluir usuário"
+        );
       }
     }
   };
 
   const formatDate = (date: string | undefined) => {
-    if (!date) return 'Nunca';
-    return new Date(date).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    if (!date) return "Nunca";
+    return new Date(date).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
-  const getRoleDisplay = (role: User['role']) => {
+  const getRoleDisplay = (role: User["role"]) => {
     switch (role) {
-      case 'admin':
-        return 'Administrador';
-      case 'broker':
-        return 'Corretor';
+      case "admin":
+        return "Administrador";
+      case "broker":
+        return "Corretor";
+      case "teamLeader":
+        return "Supervisor";
       default:
-        return 'Usuário';
+        return "Usuário";
     }
   };
 
   const columns = [
-    { header: 'Nome', accessor: 'name' as const },
-    { header: 'Email', accessor: 'email' as const },
+    { header: "Nome", accessor: "name" as const },
+    { header: "Email", accessor: "email" as const },
     {
-      header: 'Perfil',
-      accessor: 'role' as const,
-      render: (value: User['role']) => getRoleDisplay(value),
+      header: "Perfil",
+      accessor: "role" as const,
+      render: (value: User["role"]) => getRoleDisplay(value),
     },
     {
-      header: 'Status',
-      accessor: 'active' as const,
+      header: "Status",
+      accessor: "active" as const,
       render: (value: boolean) => (
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-          value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-        }`}>
-          {value ? 'Ativo' : 'Inativo'}
+        <span
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            value ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+          }`}>
+          {value ? "Ativo" : "Inativo"}
         </span>
       ),
     },
     {
-      header: 'Último Acesso',
-      accessor: 'lastLogin' as const,
+      header: "Último Acesso",
+      accessor: "lastLogin" as const,
       render: (value: string) => (
         <div className="flex items-center space-x-1">
           <Clock className="h-4 w-4 text-gray-400" />
@@ -146,8 +176,8 @@ export function Users() {
       ),
     },
     {
-      header: 'Criado em',
-      accessor: 'createdAt' as const,
+      header: "Criado em",
+      accessor: "createdAt" as const,
       render: (value: string) => formatDate(value),
     },
   ];
@@ -164,10 +194,10 @@ export function Users() {
         onClick={() => handleToggleStatus(user.id)}
         className={`p-1 rounded-full ${
           user.active
-            ? 'text-red-600 hover:text-red-900'
-            : 'text-green-600 hover:text-green-900'
+            ? "text-red-600 hover:text-red-900"
+            : "text-green-600 hover:text-green-900"
         }`}
-        title={user.active ? 'Desativar usuário' : 'Ativar usuário'}>
+        title={user.active ? "Desativar usuário" : "Ativar usuário"}>
         {user.active ? (
           <UserX className="h-4 w-4" />
         ) : (
@@ -215,25 +245,19 @@ export function Users() {
         />
       )}
 
-      <Table
-        data={users}
-        columns={columns}
-        renderActions={renderActions}
-      />
+      <Table data={users} columns={columns} renderActions={renderActions} />
 
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title={editingUser ? 'Editar Usuário' : 'Novo Usuário'}>
+        title={editingUser ? "Editar Usuário" : "Novo Usuário"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <UserForm
             formData={formData}
             setFormData={setFormData}
             isEditing={!!editingUser}
           />
-          {operationError && (
-            <ErrorMessage message={operationError} />
-          )}
+          {operationError && <ErrorMessage message={operationError} />}
           <div className="flex justify-end space-x-3">
             <button
               type="button"
@@ -244,7 +268,7 @@ export function Users() {
             <button
               type="submit"
               className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-              {editingUser ? 'Salvar' : 'Criar'}
+              {editingUser ? "Salvar" : "Criar"}
             </button>
           </div>
         </form>
@@ -254,8 +278,8 @@ export function Users() {
         isOpen={!!selectedUserForPasswordReset}
         onClose={() => setSelectedUserForPasswordReset(null)}
         onSubmit={handleResetPassword}
-        userName={selectedUserForPasswordReset?.name || ''}
-        userId={selectedUserForPasswordReset?.id || ''}
+        userName={selectedUserForPasswordReset?.name || ""}
+        userId={selectedUserForPasswordReset?.id || ""}
       />
 
       <ConfirmDialog

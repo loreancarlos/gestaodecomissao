@@ -59,6 +59,7 @@ export function UserForm({ formData, setFormData, isEditing }: UserFormProps) {
         >
           <option value="user">Usuário</option>
           <option value="broker">Corretor</option>
+          <option value="teamLeader">Supervisor de Equipe</option>
           <option value="admin">Administrador</option>
         </select>
       </div>
