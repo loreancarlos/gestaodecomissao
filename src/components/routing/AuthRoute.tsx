@@ -20,7 +20,11 @@ export function AuthRoute({ children, requireAuth = true }: AuthRouteProps) {
   if (!requireAuth && isAuthenticated) {
     return (
       <Navigate
-        to={user?.role === "broker" ? "/commissions" : "/clients"}
+        to={
+          user?.role === "broker" || user?.role === "teamLeader"
+            ? "/commissions"
+            : "/clients"
+        }
         replace
       />
     );

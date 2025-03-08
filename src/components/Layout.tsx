@@ -34,7 +34,7 @@ export function Layout() {
 
   const renderMobileNavLinks = () => (
     <>
-      {user?.role !== "broker" && (
+      {user?.role !== "broker" && user?.role !== "teamLeader" && (
         <>
           <Link
             to="/clients"
@@ -77,21 +77,22 @@ export function Layout() {
           </Link>
         </>
       )}
-      {user?.role === "broker" && (
-        <Link
-          to="/commissions"
-          className={`block px-3 py-2 text-base font-medium ${
-            location.pathname === "/commissions"
-              ? "text-indigo-600"
-              : "text-gray-500"
-          }`}
-          onClick={() => setIsMobileMenuOpen(false)}>
-          <div className="flex items-center">
-            <DollarSign className="h-5 w-5 mr-2" />
-            Comissões
-          </div>
-        </Link>
-      )}
+      {user?.role === "broker" ||
+        (user?.role === "teamLeader" && (
+          <Link
+            to="/commissions"
+            className={`block px-3 py-2 text-base font-medium ${
+              location.pathname === "/commissions"
+                ? "text-indigo-600"
+                : "text-gray-500"
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}>
+            <div className="flex items-center">
+              <DollarSign className="h-5 w-5 mr-2" />
+              Comissões
+            </div>
+          </Link>
+        ))}
       {user?.role === "admin" && (
         <Link
           to="/users"
@@ -138,6 +139,7 @@ export function Layout() {
           </Link>
         </>
       )}
+
       {user?.role === "broker" ||
         (user?.role === "teamLeader" && (
           <Link
@@ -149,6 +151,7 @@ export function Layout() {
             Comissões
           </Link>
         ))}
+
       {user?.role === "admin" && (
         <Link
           to="/users"

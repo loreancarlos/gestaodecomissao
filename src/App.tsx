@@ -38,7 +38,7 @@ export function App() {
           <Route
             path="/clients"
             element={
-              <PrivateRoute requireBroker={false}>
+              <PrivateRoute requireAdmin>
                 <Clients />
               </PrivateRoute>
             }
@@ -46,7 +46,7 @@ export function App() {
           <Route
             path="/developments"
             element={
-              <PrivateRoute requireBroker={false}>
+              <PrivateRoute requireAdmin>
                 <Developments />
               </PrivateRoute>
             }
@@ -54,7 +54,7 @@ export function App() {
           <Route
             path="/sales"
             element={
-              <PrivateRoute requireBroker={false}>
+              <PrivateRoute requireAdmin>
                 <Sales />
               </PrivateRoute>
             }
@@ -64,7 +64,7 @@ export function App() {
           <Route
             path="/commissions"
             element={
-              <PrivateRoute requireBroker>
+              <PrivateRoute requireBroker requireTeamLeader>
                 <Commissions />
               </PrivateRoute>
             }
@@ -84,7 +84,7 @@ export function App() {
           <Route
             path="*"
             element={
-              user?.role === "broker" ? (
+              user?.role === "broker" || user?.role === "teamLeader" ? (
                 <Navigate to="/commissions" replace />
               ) : (
                 <Navigate to="/clients" replace />
