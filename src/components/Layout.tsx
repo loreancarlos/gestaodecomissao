@@ -110,7 +110,7 @@ export function Layout() {
 
   const renderDesktopNavLinks = () => (
     <>
-      {user?.role !== "broker" && (
+      {user?.role !== "broker" && user?.role !== "teamLeader" && (
         <>
           <Link
             to="/clients"
@@ -138,16 +138,17 @@ export function Layout() {
           </Link>
         </>
       )}
-      {user?.role === "broker" && (
-        <Link
-          to="/commissions"
-          className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive(
-            "/commissions"
-          )}`}>
-          <DollarSign className="h-4 w-4 mr-1" />
-          Comissões
-        </Link>
-      )}
+      {user?.role === "broker" ||
+        (user?.role === "teamLeader" && (
+          <Link
+            to="/commissions"
+            className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${isActive(
+              "/commissions"
+            )}`}>
+            <DollarSign className="h-4 w-4 mr-1" />
+            Comissões
+          </Link>
+        ))}
       {user?.role === "admin" && (
         <Link
           to="/users"
